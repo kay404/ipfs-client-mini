@@ -16,8 +16,10 @@
   "dependencies": {
     "@types/node": "^14.0.6",
     "@types/node-fetch": "^2.5.7",
+    "merge-options": "^2.0.0",
     "nanoid": "^3.1.9",
     "node-fetch": "^2.6.0",
+    "p-fifo": "^1.0.0",
     "ts-mocha": "^7.0.0",
     "typescript": "^3.9.3"
   }
