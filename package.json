@@ -1,0 +1,24 @@
+{
+  "name": "ipfs.js",
+  "version": "1.0.0",
+  "description": "ipfs client",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "ts-mocha -p tsconfig.json tests",
+    "clean": "rm -rf dist",
+    "build-web": "webpack --config webpack.prod.js && webpack --config webpack.debug.js"
+  },
+  "devDependencies": {
+    "webpack": "^4.43.0"
+  },
+  "dependencies": {
+    "@types/node": "^14.0.6",
+    "@types/node-fetch": "^2.5.7",
+    "nanoid": "^3.1.9",
+    "node-fetch": "^2.6.0",
+    "ts-mocha": "^7.0.0",
+    "typescript": "^3.9.3"
+  }
+}
