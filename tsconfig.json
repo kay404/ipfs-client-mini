@@ -21,6 +21,7 @@
   "include": [
       "src/*.js",
       "src/*.ts",
+      "src/*/*.ts",
       "tests/*.ts"
   ]
 }
