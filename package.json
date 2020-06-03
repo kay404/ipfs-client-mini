@@ -4,23 +4,32 @@
   "description": "ipfs client",
   "main": "dist/index.js",
   "license": "MIT",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "test": "ts-mocha -p tsconfig.json tests",
+    "build": "tsc -p ./tsconfig.json && mkdir -p dist/utils/files && cp -r src/utils/files/ dist/utils/files/",
+    "test": "ts-mocha -p tsconfig.json src/tests/*",
     "clean": "rm -rf dist",
     "build-web": "webpack --config webpack.prod.js && webpack --config webpack.debug.js"
   },
   "devDependencies": {
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^14.0.6",
+    "it-concat": "^1.0.0",
+    "mocha": "^7.2.0",
+    "node-fetch": "^2.6.0",
+    "ts-mocha": "^7.0.0",
+    "typescript": "^3.9.3",
     "webpack": "^4.43.0"
   },
   "dependencies": {
-    "@types/node": "^14.0.6",
-    "@types/node-fetch": "^2.5.7",
+    "it-all": "^1.0.2",
+    "it-tar": "^1.2.2",
+    "iterable-ndjson": "^1.1.0",
     "merge-options": "^2.0.0",
     "nanoid": "^3.1.9",
-    "node-fetch": "^2.6.0",
-    "p-fifo": "^1.0.0",
-    "ts-mocha": "^7.0.0",
-    "typescript": "^3.9.3"
+    "p-fifo": "^1.0.0"
   }
 }

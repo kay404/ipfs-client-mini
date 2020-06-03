@@ -2,12 +2,16 @@
  * @Description: 
  * @Author: kay
  * @Date: 2020-06-01 10:45:26
- * @LastEditTime: 2020-06-02 16:18:35
- * @LastEditors: sandman
+ * @LastEditTime: 2020-06-03 17:24:01
+ * @LastEditors: kay
  */
 
-import { nanoid } from 'nanoid'
-import multipartRequest from './multipart-request';
+import multipartRequest from './multipart-request'
+import toIterable from './utils/iterator'
+import toCamel from './utils/to-camel'
+const Tar = require('it-tar')
+const all = require('it-all')
+const ndjson = require('iterable-ndjson')
 
 export interface addResult {
   Name: string;
@@ -40,10 +44,8 @@ export class IpfsClient {
    */
   public async fetch(path: string, options: any) {
     let response;
-    let json;
     try {
       const f = this.fetchBuiltin;
-      var headers = options.headers
       response = await f(this.endpoint + path, {
         headers: options.headers ? options.headers : {},
         body: options.body ? options.body : null,
@@ -54,26 +56,82 @@ export class IpfsClient {
       e.isFetchError = true;
       throw e;
     }
-    
+    // console.log(response)
     if (!response.ok) {
-      throw new Error(response.statusText);
+      throw new Error((await response.json()).Message);
     }
     return response;
   }
   
-  public async cat(cid: string): Promise<any> {
-    return await this.fetch(`/api/v0/cat?arg=${cid}`, {})
+  private async* catStream(cid: string){
+    // return await this.fetch(`/api/v0/cat?arg=${cid}`, {})
+    var res = await this.fetch(`/api/v0/cat?arg=${cid}`, {})
+    yield * toIterable(res.body)
   }
   
-  public async get(cid: string): Promise<any> {
-    return await this.fetch(`/api/v0/get?arg=${cid}`, {})
+  public async cat(cid: string) {
+    try {
+      for await (const data of this.catStream(cid)) {
+        return data
+      }
+    } catch (err) {
+      console.log(err.toString())
+    }
   }
 
-  public async add(input: object): Promise<any> {
-    return await this.fetch('/api/v0/add?pin=true', {
+  private async* getSteam(cid: string){
+    var res = await this.fetch(`/api/v0/get?arg=${cid}`, {})
+    var extractor = Tar.extract()
+    for await (const { header, body } of extractor(toIterable(res.body))) {
+      if (header.type === 'directory') {
+        yield {
+          path: header.name
+        }
+      } else {
+        yield {
+          path: header.name,
+          content: body
+        }
+      }
+    }
+  }
+  public async get(cid: string) {
+    return all(this.getSteam(cid))
+  }
+
+  public async* add(input: any){
+    var res =  await this.fetch('/api/v0/add?pin=true', {
       ...(
         await multipartRequest(input, null)
       )
     })
+    for await (let file of ndjson(toIterable(res.body))) {
+      yield toCamel(file)
+    }
+  }
+
+  public async addDir(input: object, directory: string) {
+    for await (const data of this.add(input)) {
+      if (data.name == directory) {
+        return data.hash
+      }
+    }
+  }
+  // fileName 等同于 ipfs -w
+  public async addFile(input: string | Buffer | Uint8Array, fileName?: string) {
+    var file = {
+      path: fileName? `${fileName}/${fileName}`: '',
+      content: input
+    }
+    if (fileName) {
+      return this.addDir(file, fileName)
+    } else {
+      for await (const data of this.add(file)) {
+        if (data.name == data.hash) {
+          return data.hash
+        }
+      }
+    }
   }
 }
+

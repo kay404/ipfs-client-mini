@@ -19,9 +19,7 @@
       ]
   },
   "include": [
-      "src/*.js",
-      "src/*.ts",
-      "src/*/*.ts",
-      "tests/*.ts"
+      "src/**/*.js",
+      "src/**/*.ts"
   ]
 }
