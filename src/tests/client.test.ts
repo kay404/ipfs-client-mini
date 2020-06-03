@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: kay
  * @Date: 2020-06-02 10:39:18
- * @LastEditTime: 2020-06-03 18:29:49
+ * @LastEditTime: 2020-06-03 18:59:36
  * @LastEditors: kay
  */ 
 
@@ -10,25 +10,29 @@
 import { IpfsClient } from '../ipfs-client';
 const fetch = require('node-fetch')
 const concat = require('it-concat')
+const all = require('it-all')
 
 describe('IPFS Client', async () => {
   var client = new IpfsClient('http://127.0.0.1:5001', { fetch })
   
   // 只上传内容
+  var fileCid: string
   it('add file', async () => {
     // content could be a stream, a url, a Buffer, a File etc
-    let res = await client.addFile('test')
-    console.log(res)
+    fileCid = await client.addFile('test')
+    console.log(fileCid)
   })
 
   // 上传内容及其对应文件名
+  var fileWithNameCid: string
   it('add file with fileName', async () => {
     // addFile(content, filseName)
-    let res = await client.addFile('a', 'a.txt')
-    console.log(res)
+    fileWithNameCid = await client.addFile('a', 'a.txt')
+    console.log(fileWithNameCid)
   })
 
-  // 上传具有根目录的文件
+  // 上传具有根目录的文件, 返回根目录的 cid
+  var dirCid: string
   it('add files with root directory', async () => {
     let rootDir = 'test'
     let files = [{
@@ -42,28 +46,28 @@ describe('IPFS Client', async () => {
       path: `${rootDir}/file3.txt`,
       content: 'three'
     }]
-    let res = await client.addDir(files, rootDir)
-    console.log(res)
+    dirCid = await client.addDir(files, rootDir)
+    console.log(dirCid)
   })
 
   // cat file
   it('cat file', async () => {
     // cat 返回的是 Buffer
-    let res = await client.cat('bafk43jqbec2g7rmq7jbk7cf6yrlvprkolplbkidpjwyifnk5a6zxblcw4rnry')
+    let res = await all(client.cat(fileCid))
     console.log(res.toString())
   })
   
   // get 单个文件无目录
   it('get file', async () => {
     // res content 返回的是 AsyncGenerator with path 和 content
-    let res = await client.get('bafk43jqbebk6clurmugs73cw5r2odu7e3w744lxtuzmjbqvbt3hyriyh45vcg')
+    let res = await all(client.get(fileCid))
     let content = await concat(res[0].content)
     console.log(content.toString())
   })
 
   // get 目录文件 
-  it('get files', async () => {
-    let res = await client.get('bafym3jqbebap2p3g2trgcgk3mynja5xai4vx4ab55ydmapxlwjd3fnalcln24')
+  it('get dir', async () => {
+    let res = await all(client.get(dirCid))
     let files: Array<object> = new Array<object>();
     for (let i in res) {
       let result = {
