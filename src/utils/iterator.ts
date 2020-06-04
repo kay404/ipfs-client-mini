@@ -2,12 +2,11 @@
  * @Description:
  * @Author: kay
  * @Date: 2020-06-02 17:21:27
- * @LastEditTime: 2020-06-03 15:17:34
+ * @LastEditTime: 2020-06-04 17:48:29
  * @LastEditors: kay
  */
 
-const toIterable =
-    function(source: any) {
+const toIterable = function(source: any) {
   if (isAsyncIterator(source)) {
     // Workaround for https://github.com/node-fetch/node-fetch/issues/766
     if (Object.prototype.hasOwnProperty.call(source, 'readable') &&
@@ -48,33 +47,10 @@ const toIterable =
   }
 }
 
-const isAsyncIterator =
-    (obj: any) => {
-      return typeof obj === 'object' && obj !== null &&
+const isAsyncIterator = (obj: any) => {
+  return typeof obj === 'object' && obj !== null &&
           // typeof obj.next === 'function' &&
-          typeof obj[Symbol.asyncIterator] === 'function'
-    }
-
-
-// const toIterable = (body:any) => {
-//   if (body[Symbol.asyncIterator]) return body
-
-//   if (body.getReader) {
-//     return (async function * () {
-//       const reader = body.getReader()
-
-//       try {
-//         while (true) {
-//           const { done, value } = await reader.read()
-//           if (done) return
-//           yield value
-//         }
-//       } finally {
-//         reader.releaseLock()
-//       }
-//     })()
-//   }
-//   throw new Error('unknown stream')
-// }
+  typeof obj[Symbol.asyncIterator] === 'function'
+}
 
 export default toIterable

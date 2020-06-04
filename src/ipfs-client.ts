@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: kay
  * @Date: 2020-06-01 10:45:26
- * @LastEditTime: 2020-06-03 18:51:54
+ * @LastEditTime: 2020-06-04 17:47:29
  * @LastEditors: kay
  */
 
@@ -11,12 +11,6 @@ import toIterable from './utils/iterator'
 import toCamel from './utils/to-camel'
 const Tar = require('it-tar')
 const ndjson = require('iterable-ndjson')
-
-export interface addResult {
-  Name: string;
-  Hash: string;
-  Size: number;
-}
 
 export class IpfsClient {
   public endpoint: string;
@@ -67,16 +61,7 @@ export class IpfsClient {
     var res = await this.fetch(`/api/v0/cat?arg=${cid}`, {})
     yield * toIterable(res.body)
   }
-  
-  // public async cat(cid: string) {
-  //   try {
-  //     for await (const data of this.catStream(cid)) {
-  //       return data
-  //     }
-  //   } catch (err) {
-  //     console.log(err.toString())
-  //   }
-  // }
+
 
   public async* get(cid: string){
     var res = await this.fetch(`/api/v0/get?arg=${cid}`, {})
@@ -94,9 +79,6 @@ export class IpfsClient {
       }
     }
   }
-  // public async get(cid: string) {
-  //   return all(this.getSteam(cid))
-  // }
 
   public async* add(input: any){
     var res =  await this.fetch('/api/v0/add?pin=true', {

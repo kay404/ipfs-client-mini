@@ -10,26 +10,47 @@
   },
   "scripts": {
     "build": "tsc -p ./tsconfig.json && mkdir -p dist/utils/files && cp -r src/utils/files/ dist/utils/files/",
-    "test": "ts-mocha -p tsconfig.json src/tests/*",
+    "test": "jest src/tests/*",
     "clean": "rm -rf dist",
     "build-web": "webpack --config webpack.prod.js && webpack --config webpack.debug.js"
   },
   "devDependencies": {
-    "@types/mocha": "^7.0.2",
     "@types/node": "^14.0.6",
     "it-concat": "^1.0.0",
-    "mocha": "^7.2.0",
+    "it-pipe": "^1.1.0",
+    "it-to-stream": "^0.1.1",
+    "jest": "^26.0.1",
     "node-fetch": "^2.6.0",
-    "ts-mocha": "^7.0.0",
+    "path": "^0.12.7",
+    "pipe": "^1.1.0",
+    "streaming-iterables": "^4.1.2",
+    "ts-jest": "^26.1.0",
     "typescript": "^3.9.3",
     "webpack": "^4.43.0"
   },
   "dependencies": {
-    "it-all": "^1.0.2",
     "it-tar": "^1.2.2",
     "iterable-ndjson": "^1.1.0",
     "merge-options": "^2.0.0",
     "nanoid": "^3.1.9",
-    "p-fifo": "^1.0.0"
+    "stream-to-it": "^0.2.0"
+  },
+  "jest": {
+    "automock": false,
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(tsx?)$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.json"
+      }
+    },
+    "testRegex": "(/src/.*(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "testEnvironment": "node"
   }
 }

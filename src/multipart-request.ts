@@ -1,7 +1,7 @@
 'use strict'
 
 const normaliseInput = require('./utils/files/normalise-input')
-import toStream from './utils/it-to-stream'
+const toStream = require('it-to-stream')
 const { nanoid } = require('nanoid')
 import modeToString from './utils/mode-to-string'
 import mtimeToObject from './utils/mtime-to-object'
@@ -57,12 +57,11 @@ async function multipartRequest(source: any, abortController: any, headers = {},
       yield `\r\n--${boundary}--\r\n`
     }
   }
-
   return {
     headers: merge(headers, {
       'Content-Type': `multipart/form-data; boundary=${boundary}`
     }),
-    body: await toStream.toReadable(streamFiles(source))
+    body: await toStream.readable(streamFiles(source))
   }
 }
 
