@@ -1,6 +1,6 @@
 {
-  "name": "ipfs.js",
-  "version": "1.0.0",
+  "name": "ipfs-mini.js",
+  "version": "0.1.0",
   "description": "ipfs client",
   "main": "dist/index.js",
   "license": "MIT",
