@@ -1,5 +1,5 @@
 {
-  "name": "ipfs-mini.js",
+  "name": "ipfs-dev.js",
   "version": "0.1.0",
   "description": "ipfs client",
   "main": "dist/index.js",
