@@ -4,9 +4,10 @@
 name: Node.js Package
 
 on:
-  releases:
-    types: [created]
-
+  push:
+    branches: [ release ]
+  pull_request:
+    branches: [ release ]
 jobs:
   build:
     runs-on: ubuntu-latest
