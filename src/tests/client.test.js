@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: kay
  * @Date: 2020-06-02 10:39:18
- * @LastEditTime: 2020-06-04 17:50:40
+ * @LastEditTime: 2020-06-24 10:56:01
  * @LastEditors: kay
  */ 
 
@@ -16,7 +16,7 @@ const { map } = require('streaming-iterables')
 const toIterable = require('stream-to-it')
 
 describe('IPFS Client', function(){
-  var client = new IpfsClient('http://127.0.0.1:5001', { fetch })
+  var client = new IpfsClient('http://icfs.baasze.com:5001', { fetch })
   
   // 只上传文件内容
   var fileCid
