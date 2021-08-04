@@ -1,42 +1,52 @@
 {
-  "name": "ipfs-dev.js",
-  "version": "0.1.2",
-  "description": "ipfs client",
+  "name": "mini-ipfs",
+  "version": "0.1.0",
+  "description": "ipfs mini client",
   "main": "dist/index.js",
-  "license": "MIT",
-  "directories": {
-    "lib": "lib",
-    "test": "tests"
-  },
   "scripts": {
-    "build": "tsc -p ./tsconfig.json && mkdir -p dist/utils/files && cp -r src/utils/files/ dist/utils/files/",
-    "test": "jest src/tests/*",
+    "test": "jest src/tests/client.test.js",
+    "build": "rm -rf dist && tsc -p ./tsconfig.json && mkdir -p dist/base && cp -r base dist/",
     "clean": "rm -rf dist",
-    "build-web": "webpack --config webpack.prod.js && webpack --config webpack.debug.js"
+    "docs-build": "sh docs/scripts/build.sh"
   },
-  "devDependencies": {
-    "@types/node": "^14.0.6",
-    "it-concat": "^1.0.0",
-    "it-pipe": "^1.1.0",
-    "it-to-stream": "^0.1.1",
-    "jest": "^26.0.1",
-    "node-fetch": "^2.6.0",
-    "path": "^0.12.7",
-    "pipe": "^1.1.0",
-    "streaming-iterables": "^4.1.2",
-    "ts-jest": "^26.1.0",
-    "typescript": "^3.9.3",
-    "webpack": "^4.43.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kay404/ipfs-client-mini.git"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kay404/ipfs-client-mini/issues"
+  },
+  "homepage": "https://github.com/kay404/ipfs-client-mini#readme",
   "dependencies": {
-    "it-tar": "^1.2.2",
+    "abort-controller": "^3.0.0",
+    "bignumber.js": "^9.0.0",
+    "buffer": "^5.6.0",
+    "class-is": "^1.1.0",
+    "is-circular": "^1.0.2",
     "iterable-ndjson": "^1.1.0",
     "merge-options": "^2.0.0",
-    "nanoid": "^3.1.9",
-    "stream-to-it": "^0.2.0"
+    "multihashing-async": "^1.0.0",
+    "p-defer": "^3.0.0",
+    "readable-stream-miniprogram": "^0.1.11",
+    "varint": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.2.3",
+    "@types/node": "^14.0.14",
+    "it-pipe": "^1.1.0",
+    "jest": "^26.0.1",
+    "node-fetch": "^2.6.0",
+    "stream-to-it": "^0.2.0",
+    "streaming-iterables": "^4.1.2",
+    "ts-jest": "^26.1.0",
+    "typescript": "^3.9.3"
   },
   "jest": {
     "automock": false,
+    "setupFiles": [],
     "moduleFileExtensions": [
       "ts",
       "tsx",

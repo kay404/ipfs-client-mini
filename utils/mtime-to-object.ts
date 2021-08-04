@@ -1,11 +1,3 @@
-/*
- * @Description: 
- * @Author: sandman sandmanhome@hotmail.com
- * @Date: 2020-06-02 15:31:36
- * @LastEditTime: 2020-06-02 15:31:58
- * @LastEditors: sandman
- */
-
 export default function parseMtime(mtime: any) {
   if (mtime == null) {
     return undefined

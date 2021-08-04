@@ -2,7 +2,7 @@
  * @Description:
  * @Author: kay
  * @Date: 2020-06-02 17:21:27
- * @LastEditTime: 2020-06-04 17:48:29
+ * @LastEditTime: 2020-07-05 23:08:55
  * @LastEditors: kay
  */
 
@@ -53,4 +53,4 @@ const isAsyncIterator = (obj: any) => {
   typeof obj[Symbol.asyncIterator] === 'function'
 }
 
-export default toIterable
+export = toIterable

@@ -1,25 +1,23 @@
 {
-  "compilerOptions": {
-      "target": "es5",
-      "module": "CommonJS",
-      "outDir": "dist",
-      "alwaysStrict": true,
-      "sourceMap": true,
-      "noImplicitAny": true,
-      "moduleResolution": "node",
-      "declaration": true,
-      "removeComments": true,
-      "downlevelIteration": true,
-      "skipLibCheck": true,
-      "esModuleInterop": true,
-      "allowSyntheticDefaultImports": true,
-      "lib": [
-          "es2017",
-          "dom"
-      ]
-  },
-  "include": [
-      "src/**/*.js",
-      "src/**/*.ts"
-  ]
-}
+    "compilerOptions": {
+        "target": "es5",
+        "module": "CommonJS",
+        "outDir": "dist",
+        "alwaysStrict": true,
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "moduleResolution": "node",
+        "declaration": true,
+        "removeComments": true,
+        "downlevelIteration": true,
+        "skipLibCheck": true,
+        "lib": [
+            "es2017",
+            "dom"
+        ]
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.js"
+, "index.ts"    ]
+  }
