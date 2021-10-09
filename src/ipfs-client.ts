@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: kay
  * @Date: 2020-06-01 10:45:26
- * @LastEditTime: 2021-08-04 17:07:45
+ * @LastEditTime: 2021-10-09 16:39:22
  * @LastEditors: kay
  */
 
@@ -70,17 +70,17 @@ export class IpfsClient {
       directory = (<{ path: string, content: Buffer }>input).path
     }
     const res = (await import('./add')).add(this, input)
-    var hash 
+    var result
     for await (const data of res) {
       if (directory) {
         if (data.name == directory) {
-          hash = data.hash
+          result = data
           break
         }
       }
-      hash = data.hash
+      result = data
     }
-    return hash
+    return result
   }
 
   public async addUrl(url: string) {
